@@ -1,0 +1,192 @@
+#E-Commerce Website and Blogging Platform, Note:Username is "admin" password is "password"
+CODE:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce and Blogging Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #product-listing, #blogging-section {
+            display: none;
+        }
+
+        #cart {
+            margin-top: 20px;
+        }
+
+        #checkout {
+            display: block;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .post {
+            background-color: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styling for code block */
+        pre {
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <div id="login-form" class="form-container">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+        </div>
+
+        <!-- E-Commerce Section -->
+        <div id="product-listing" class="mt-5">
+            <h2>Product Listing</h2>
+            <div class="row" id="products">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+            <div id="cart">
+                <h3>Your Cart</h3>
+                <ul id="cart-items"></ul>
+                <button id="checkout" class="btn btn-success">Checkout</button>
+            </div>
+        </div>
+
+        <!-- Blogging Section -->
+        <div id="blogging-section" class="mt-5">
+            <h2>Blogging Platform</h2>
+            <form id="blog-form">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Post Title</label>
+                    <input type="text" class="form-control" id="title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">Post Content</label>
+                    <textarea class="form-control" id="content" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Create Post</button>
+            </form>
+            <div id="posts" class="mt-4">
+                <!-- Blog posts will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Frontend JavaScript for both E-Commerce and Blogging Platform
+
+        // Login Logic
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Simulate login validation
+            if (username === "admin" && password === "password") {
+                document.getElementById("login-form").style.display = "none";
+                document.getElementById("product-listing").style.display = "block";
+                document.getElementById("blogging-section").style.display = "block";
+            } else {
+                alert("Invalid username or password!");
+            }
+        });
+
+        // Mock Product Listing
+        const products = [
+            { id: 1, name: "Earphones", price: "$10000", image: "https://i.ibb.co/3zPnKQ3/Screenshot-2024-12-10-144402.png" },
+            { id: 2, name: "apple mobile", price: "$220000", image: "https://i.ibb.co/Np8Vsr2/Screenshot-2024-12-10-144444.png" },
+            { id: 3, name: "laptops", price: "$3000000", image: "https://i.ibb.co/D1BKspw/Screenshot-2024-12-10-144522.png" },
+        ];
+
+        const productContainer = document.getElementById("products");
+        let cart = [];
+
+        products.forEach(product => {
+            const productCard = `
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="${product.image}" alt="${product.name}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text">${product.price}</p>
+                            <button class="btn btn-secondary" onclick="addToCart(${product.id})">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            productContainer.innerHTML += productCard;
+        });
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById("cart-items");
+            cartItems.innerHTML = "";
+            cart.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = `${item.name} - ${item.price}`;
+                cartItems.appendChild(li);
+            });
+        }
+
+        // Dummy Checkout Logic
+        document.getElementById("checkout").addEventListener("click", function() {
+            alert("Checkout successful (dummy integration)!");
+        });
+
+        // Blogging Section Logic
+        document.getElementById("blog-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const title = document.getElementById("title").value;
+            const content = document.getElementById("content").value;
+
+            const post = `
+                <div class="post">
+                    <h4>${title}</h4>
+                    <p>${content}</p>
+                </div>
+            `;
+            document.getElementById("posts").innerHTML += post;
+        });
+    </script>
+</body>
+</html>
