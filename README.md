@@ -72,7 +72,8 @@ print("The resume has been successfully generated.")
 
 
 
-TASK-2
+**TASK 2**
+
 
 class TaskManager:
     def __init__(self):
